@@ -78,7 +78,7 @@ int genlds(int argc, char **argv)
     for (int i = 0; i < nt_hdr->FileHeader.NumberOfSections; i++)
     {
         const PIMAGE_SECTION_HEADER cur_sct = IMAGE_FIRST_SECTION(nt_hdr) + i;
-        char buf[9];
+        char buf[10];
         memset(buf, 0, sizeof buf);
         memcpy(buf, cur_sct->Name, 8);
 
@@ -94,7 +94,7 @@ int genlds(int argc, char **argv)
 
 
             if (i < nt_hdr->FileHeader.NumberOfSections - 1) {
-                sprintf(buf, "FILL%d", filln++);
+                snprintf(buf, sizeof buf, "FILL%d", filln++);
                 fprintf(ofh, "    %-15s   0x%-6"PRIX32" : { . = . + 0x%"PRIX32"; }\n", buf, cur_sct->VirtualAddress + nt_hdr->OptionalHeader.ImageBase, cur_sct->Misc.VirtualSize ? cur_sct->Misc.VirtualSize : cur_sct->SizeOfRawData);
             }
 
