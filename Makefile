@@ -1,4 +1,4 @@
-.PHONY: clean all
+.PHONY: clean all install
 
 REV     := $(shell git rev-parse --short @{0})
 STRIP   := strip
@@ -27,3 +27,9 @@ dump.o export.o genlds.o genmak.o genprj.o import.o patch.o pe2obj.o re2obj.o se
 
 clean:
 	$(RM) $(TARGET) $(wildcard *.o)
+
+install: $(TARGET)
+	install -Dt $(DESTDIR)$(PREFIX)/bin/ $(TARGET)
+
+uninstall: 
+	$(RM) $(DESTDIR)$(PREFIX)/bin/$(TARGET)
